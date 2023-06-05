@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-int isfull(binary_tree_t *node);
+size_t size(binary_tree_t *node);
 size_t height(binary_tree_t *node);
 /**
  * binary_tree_is_perfect - check if binary tree is full
@@ -15,31 +15,32 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 
 	/* if left subtree height is same as right */
 	if (height(tree->left) == height(tree->right))
-		return (isfull((binary_tree_t *)tree));
+	{
+		/* if both sub-trees have same size */
+		if (size(tree->left) == size(tree->right))
+			return (1);
+	}
 	return (0);
 }
 
+
 /**
- * isfull - find if subtree is full
- * @node: pointer to root node
+ * size - recursively find height of tree
+ * @node: ptr to current node (from root)
  *
- * Return: 0 if not full, 1 if full
+ * Return: height
  */
-int isfull(binary_tree_t *node)
+size_t size(binary_tree_t *node)
 {
-	int full;
+	size_t left_size, right_size;
 
 	if (!node)
-		return (1);
-	if ((node->left == node->right) || (node->left && node->right))
-		full = 1;
-	else
-		full = 0;
-	full *= isfull(node->left);
-	full *= isfull(node->right);
+		return (0);
 
-	return (full);
+	left_size = size(node->left);
+	right_size = size(node->right);
 
+	return ((left_size  + right_size) + 1);
 }
 
 /**
