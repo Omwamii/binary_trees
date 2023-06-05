@@ -11,24 +11,24 @@ size_t binary_tree_nodes(const binary_tree_t *tree)
 {
 	if (!tree)
 		return (0);
-	return(count_nodes((binary_tree_t *)tree));
+	return (count_nodes((binary_tree_t *)tree));
 }
 
 /**
- * count_leaves - recursively find leaves of sub-trees
+ * count_nodes - recursively find leaves of sub-trees
  * @node: ptr to current node (from root)
  *
  * Return: height
  */
 size_t count_nodes(binary_tree_t *node)
 {
-        size_t num_nodes = 0;
+	size_t num_nodes = 0;
 
-        if (!node)
-                return (0);
-        if (node->left != node->right) /* null */
+	if (!node)
+		return (0);
+	if (node->left != node->right) /* null */
 		++num_nodes;
 	num_nodes += (count_nodes(node->left));
 	num_nodes += (count_nodes(node->right));
-        return (num_nodes);
+	return (num_nodes);
 }
