@@ -21,18 +21,6 @@ typedef struct binary_tree_s
 	struct binary_tree_s *right;
 } binary_tree_t;
 
-/**
- * struct binary_stack - node for path list
- *
- * @node: ptr to node in tree path
- * @next: ptr to next node in path
- */
-typedef struct binary_stack
-{
-	binary_tree_t *node;
-	struct binary_stack *next;
-} binary_stack_t;
-
 void binary_tree_print(const binary_tree_t *);
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);
@@ -55,5 +43,6 @@ binary_tree_t *binary_tree_sibling(binary_tree_t *node);
 binary_tree_t *binary_tree_uncle(binary_tree_t *node);
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 		const binary_tree_t *second);
+void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
 
 #endif
