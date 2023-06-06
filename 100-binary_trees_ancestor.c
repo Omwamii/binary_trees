@@ -11,16 +11,27 @@ binary_tree_t *find_ancestor(binary_tree_t *root, int n1, int n2);
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 		const binary_tree_t *second)
 {
-	binary_tree_t *root, *tmp;
+	binary_tree_t *root, *tmp, *tmp2, *test;
 
 	if (!first || !second)
 		return (NULL);
+
 	tmp = (binary_tree_t *)first;
 	while (tmp)
 	{
 		root = tmp;
 		tmp = tmp->parent;
 	}
+	tmp2 = (binary_tree_t *)second;
+	while (tmp2)
+	{
+		test = tmp2;
+		tmp2 = tmp->parent;
+	}
+
+	/* check if nodes are in the same tree */
+	if (root != test)
+		return (NULL);
 	return (find_ancestor(root, first->n, second->n));
 }
 
