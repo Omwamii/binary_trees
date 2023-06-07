@@ -29,7 +29,10 @@ bst_t *bst_insert(bst_t **tree, int value)
 		if (!root)
 			*tree = new_node;
 		else
+		{
+			free(new_node);
 			return (NULL); /* duplicate value found */
+		}
 	}
 	return (new_node);
 }
