@@ -1,6 +1,7 @@
 #include "binary_trees.h"
+#define MAX 50
 
-bool has_duplicate(binary_tree_t *root);
+void preorder(binary_tree_t *node, int *array, int index);
 int is_bst(binary_tree_t *node);
 int max_val(binary_tree_t *node);
 int min_val(binary_tree_t *node);
@@ -12,9 +13,27 @@ int min_val(binary_tree_t *node);
  */
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
+	int *tree_array, i, has_dupl = 0, j;
+
 	if (!tree)
 		return (0);
-	if (has_duplicate((binary_tree_t *)tree))
+
+	tree_array = malloc(sizeof(int) * MAX);
+	for (i = 0; i < MAX; i++)
+		tree_array[i] = 0;
+	preorder((binary_tree_t *)tree, tree_array, 0);
+	for (i = 0; tree_array[i] != 0; i++)
+	{
+		for (j = 0; tree_array[j] != 0; j++)
+		{
+			if (j == i)
+				continue;
+			if (tree_array[i] == tree_array[j])
+				has_dupl = 1;
+		}
+	}
+	free(tree_array);
+	if (has_dupl)
 		return (0);
 	return (is_bst((binary_tree_t *)tree));
 }
@@ -40,6 +59,7 @@ int is_bst(binary_tree_t *node)
 
 	if (!is_bst(node->left) || !is_bst(node->right))
 		return (0);
+
 	return (1);
 }
 
@@ -92,19 +112,16 @@ int min_val(binary_tree_t *node)
 }
 
 /**
- * has_duplicate - find if tree has duplicate value
- * @root: ptr to root node
- *
- * Return: true or false
+ * preorder - traverse tree in pre-order
+ * @node: current node in tree
+ * @array: integer array to store values
+ * @index: index where to store values
  */
-bool has_duplicate(binary_tree_t *root)
+void preorder(binary_tree_t *node, int *array, int index)
 {
-	if (!root)
-		return (false);
-	if (!root->left || !root->right)
-		return (false);
-	if (root->left->n == root->n || root->right->n == root->n)
-		return (true);
-
-	return (has_duplicate(root->left) || has_duplicate(root->right));
+	if (!node)
+		return;
+	array[index] = node->n;
+	preorder(node->left, array, (2 * index) + 1);
+	preorder(node->right, array, (2 * index) + 2);
 }
