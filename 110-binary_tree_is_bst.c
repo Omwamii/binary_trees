@@ -18,10 +18,15 @@ int binary_tree_is_bst(const binary_tree_t *tree)
 	if (!tree)
 		return (0);
 
+	/* allocate array to store values of every node */
 	tree_array = malloc(sizeof(int) * MAX);
 	for (i = 0; i < MAX; i++)
 		tree_array[i] = 0;
+
+	/* traverse to input values into array */
 	preorder((binary_tree_t *)tree, tree_array, 0);
+
+	/* look for duplicates in array */
 	for (i = 0; tree_array[i] != 0; i++)
 	{
 		for (j = 0; tree_array[j] != 0; j++)
@@ -33,6 +38,8 @@ int binary_tree_is_bst(const binary_tree_t *tree)
 		}
 	}
 	free(tree_array);
+
+	/* if there is duplicate, not a BST */
 	if (has_dupl)
 		return (0);
 	return (is_bst((binary_tree_t *)tree));
