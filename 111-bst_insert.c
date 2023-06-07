@@ -26,7 +26,7 @@ bst_t *bst_insert(bst_t **tree, int value)
 	}
 	else
 	{
-		if (!(*tree))
+		if (!root)
 			*tree = new_node;
 		else
 			return (NULL); /* duplicate value found */
