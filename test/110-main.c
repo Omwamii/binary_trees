@@ -14,10 +14,10 @@ int main(void)
 
     root = binary_tree_node(NULL, 98);
     root->left = binary_tree_node(root, 12);
-    root->right = binary_tree_node(root, 128);
+    root->right = binary_tree_node(root, 98);
     root->left->right = binary_tree_node(root->left, 54);
     root->right->right = binary_tree_node(root, 402);
-    root->left->left = binary_tree_node(root->left, 10);
+    root->left->left = binary_tree_node(root->left, 12);
 
     binary_tree_print(root);
     bst = binary_tree_is_bst(root);

@@ -1,5 +1,6 @@
 #include "binary_trees.h"
 
+bool has_duplicate(binary_tree_t *root);
 int is_bst(binary_tree_t *node);
 int max_val(binary_tree_t *node);
 int min_val(binary_tree_t *node);
@@ -11,6 +12,10 @@ int min_val(binary_tree_t *node);
  */
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
+	if (!tree)
+		return (0);
+	if (has_duplicate((binary_tree_t *)tree))
+		return (0);
 	return (is_bst((binary_tree_t *)tree));
 }
 
@@ -84,4 +89,22 @@ int min_val(binary_tree_t *node)
 	if (val > node->n)
 		val = node->n;
 	return (val);
+}
+
+/**
+ * has_duplicate - find if tree has duplicate value
+ * @root: ptr to root node
+ *
+ * Return: true or false
+ */
+bool has_duplicate(binary_tree_t *root)
+{
+	if (!root)
+		return (false);
+	if (!root->left || !root->right)
+		return (false);
+	if (root->left->n == root->n || root->right->n == root->n)
+		return (true);
+
+	return (has_duplicate(root->left) || has_duplicate(root->right));
 }
