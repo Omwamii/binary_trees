@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-bst_t *delete_node(bst_t *root, int value);
+bst_t *search(bst_t *node, int value);
 bst_t *min_val_node(bst_t *root);
 /**
  * bst_remove - removes a node from a BST
@@ -11,50 +11,81 @@ bst_t *min_val_node(bst_t *root);
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
+	bst_t *remove, *parent, *successor, *ancestor;
+
 	if (!root)
 		return (NULL);
-	return (delete_node(root, value));
-}
+	remove = search(root, value);
 
-/**
- * delete_node - delete node from tree
- * @root: root node of tree
- * @value: value of node to delete
- *
- * Return: new root node
- */
-bst_t *delete_node(bst_t *root, int value)
-{
-	bst_t *tmp;
-
-	if (!root)
+	/* nothing to remove */
+	if (!remove)
 		return (root);
-	if (value < root->n)
-		root->left = delete_node(root->left, value);
-	else if (value > root->n)
-		root->right = delete_node(root->right, value);
+	parent = remove->parent;
+	if (!remove->left && !remove->right)
+	{
+		if (parent)
+		{
+			if (parent->left == remove)
+				parent->left = NULL;
+			else
+				parent->right = NULL;
+		}
+		else
+			root = NULL; /* root node is removed */
+		free(remove);
+	}
+	else if (!remove->right && remove->left)
+	{
+		if (parent)
+		{
+			if (parent->left == remove)
+				parent->left = remove->left;
+			else
+				parent->right = remove->left;
+		}
+		else
+			root = remove->left;
+		remove->left->parent = parent;
+		free(remove);
+	}
+	else if (!remove->left && remove->right)
+	{
+		if (parent)
+		{
+			if (parent->left == remove)
+				parent->left = remove->right;
+			else
+				parent->right = remove->right;
+		}
+		else
+			root = remove->right;
+		remove->right->parent = parent;
+		free(remove);
+	}
 	else
 	{
-		/* node has one or no child */
-		if (!root->left)
+		successor = min_val_node(remove->right);
+		ancestor = successor->parent;
+		if (ancestor != remove)
+			successor->parent->left = NULL; /* leftmost since its the least */
+		successor->parent = parent;
+		if (parent)
 		{
-			tmp = root->right;
-			free(root);
-			return (tmp);
+			if (parent->left == remove)
+				parent->left = successor;
+			else
+				parent->right = successor;
 		}
-		else if (!root->right)
-		{
-			tmp = root->left;
-			free(root);
-			return (tmp);
-		}
-
-		/* node has 2 children */
-		tmp = min_val_node(root->right);
-
-		root->n = tmp->n;
-
-		root->right = delete_node(root->right, tmp->n);
+		else
+			root = successor;
+		successor->left = remove->left;
+		if (remove->right != successor)
+			successor->right = remove->right;
+		if (successor->right)
+			successor->right->parent = successor;
+		if (successor->left)
+			successor->left->parent = successor;
+		free(remove);
 	}
 	return (root);
 }
@@ -73,3 +104,24 @@ bst_t *min_val_node(bst_t *root)
 		current = current->left;
 	return (current);
 }
+
+/**
+ * search - search for node in tree
+ * @node: root node
+ * @value: value of node to find
+ *
+ * Return: ptr to the node found
+ */
+bst_t *search(bst_t *node, int value)
+{
+	if (!node)
+		return (NULL);
+	if (node->n == value)
+		return (node);
+	if (node->n > value)
+		return (search(node->left, value));
+	if (node->n < value)
+		return (search(node->right, value));
+	return (node);
+}
+
