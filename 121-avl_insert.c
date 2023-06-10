@@ -1,7 +1,6 @@
 #include "binary_trees.h"
 
 bst_t *find_parent(bst_t *node, int value);
-avl_t *find_imbalanced_node(avl_t *node);
 /**
  * avl_insert - insert into AVL tree
  * @tree: ptr to ptr to root node
