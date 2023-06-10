@@ -12,6 +12,7 @@ avl_t *find_imbalanced_node(avl_t *node);
 avl_t *avl_insert(avl_t **tree, int value)
 {
 	bst_t *pops, *root, *new_node, *node;
+	int bl;
 
 	if (!tree)
 		return (NULL);
@@ -38,21 +39,28 @@ avl_t *avl_insert(avl_t **tree, int value)
 		}
 	}
 	node = find_imbalanced_node(new_node->parent); /* new node is bal */
+	bl = binary_tree_balance((const binary_tree_t *)node);
 	if (node)
 	{
-		if (node->left && value < node->left->n) /* LL insertion */
-			binary_tree_rotate_right((binary_tree_t *)node);
-		else if (node->left && value > node->left->n) /* LR insertion */
+		if (bl > 1)
 		{
-			binary_tree_rotate_left((binary_tree_t *)node->left);
-			binary_tree_rotate_right((binary_tree_t *)node);
+			if (value < node->left->n) /* LL insertion */
+				binary_tree_rotate_right((binary_tree_t *)node);
+			else if (value > node->left->n) /* LR insertion */
+			{
+				binary_tree_rotate_left((binary_tree_t *)node->left);
+				binary_tree_rotate_left((binary_tree_t *)node);
+			}
 		}
-		else if (node->right && value > node->right->n) /* RR insertion */
-			binary_tree_rotate_left((binary_tree_t *)node);
-		else /* RL insertion */
+		else /* balance < -1 */
 		{
-			binary_tree_rotate_right((binary_tree_t *)node->right);
-			binary_tree_rotate_left((binary_tree_t *)node);
+			if (value > node->right->n) /* RR insertion */
+				binary_tree_rotate_left((binary_tree_t *)node);
+			else if (value < node->right->n) /* RL insertion */
+			{
+				binary_tree_rotate_right((binary_tree_t *)node->right);
+				binary_tree_rotate_left((binary_tree_t *)node);
+			}
 		}
 	}
 	if (node && !(node->parent->parent)) /* new root after rotate */
