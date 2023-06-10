@@ -89,7 +89,7 @@ avl_t *avl_remove(bst_t *root, int value)
 			successor->left->parent = successor;
 		free(remove);
 	}
-	imbalance = find_imbalanced_node(parent); /* find imbalanced node after removal */
+	imbalance = find_imbalanced_node(parent); /* imbalanced node after removal */
 	bal = binary_tree_balance(imbalance);
 	balance_tree(imbalance, bal, value);
 	return (root);
@@ -134,6 +134,7 @@ bst_t *search(bst_t *node, int value)
  * balance_tree - balances the tree after operations
  * @node: imbalanced node
  * @bal: balance factor of the node
+ * @value: value of previous deleted node
  */
 void balance_tree(avl_t *node, int bal, int value)
 {
