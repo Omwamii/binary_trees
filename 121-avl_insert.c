@@ -18,6 +18,8 @@ avl_t *avl_insert(avl_t **tree, int value)
 	root = *tree;
 	pops = find_parent(root, value);
 	new_node = (avl_t *)binary_tree_node(pops, value);
+	if (!new_node)
+		return (NULL);
 	if (pops)
 	{
 		if (!pops->left && pops->n > value)
