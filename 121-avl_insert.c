@@ -49,7 +49,7 @@ avl_t *avl_insert(avl_t **tree, int value)
 			else if (value > node->left->n) /* LR insertion */
 			{
 				binary_tree_rotate_left((binary_tree_t *)node->left);
-				binary_tree_rotate_left((binary_tree_t *)node);
+				binary_tree_rotate_right((binary_tree_t *)node);
 			}
 		}
 		else /* balance < -1 */
