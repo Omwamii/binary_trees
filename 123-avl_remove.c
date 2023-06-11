@@ -88,6 +88,7 @@ avl_t *avl_remove(bst_t *root, int value)
 			successor->right->parent = successor;
 		if (successor->left)
 			successor->left->parent = successor;
+		parent = successor;
 		free(remove);
 	}
 	/* balance the tree after removing */
