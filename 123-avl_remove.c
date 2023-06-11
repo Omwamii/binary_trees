@@ -4,7 +4,8 @@ void balance_tree(avl_t *node, int bal, int value);
 avl_t *search(avl_t *node, int value);
 avl_t *min_val_node(avl_t *root);
 /**
- * avl_remove - removes a node from a BST
+ * avl_remove - removes a node from an AVL replacing
+ * with the in-order successor
  * @root: root node of tree
  * @value: value of node to remove
  *
