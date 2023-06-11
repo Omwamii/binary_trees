@@ -143,9 +143,9 @@ void balance_tree(avl_t *node, int bal, int value)
 		return;
 	if (bal > 1)
 	{
-		if (value > node->left->n) /* LL insertion */
+		if (value > node->left->n) /* LL deletion */
 			binary_tree_rotate_right((binary_tree_t *)node);
-		else if (value < node->left->n) /* LR insertion */
+		else if (value < node->left->n) /* LR deletion */
 		{
 			binary_tree_rotate_left((binary_tree_t *)node->left);
 			binary_tree_rotate_right((binary_tree_t *)node);
@@ -153,9 +153,9 @@ void balance_tree(avl_t *node, int bal, int value)
 	}
 	else /* balance < -1 */
 	{
-		if (value < node->right->n) /* RR insertion */
+		if (value < node->right->n) /* RR deletion */
 			binary_tree_rotate_left((binary_tree_t *)node);
-		else if (value > node->right->n) /* RL insertion */
+		else if (value > node->right->n) /* RL deletion */
 		{
 			binary_tree_rotate_right((binary_tree_t *)node->right);
 			binary_tree_rotate_left((binary_tree_t *)node);
