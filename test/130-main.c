@@ -44,6 +44,8 @@ int main(void)
 
     root = basic_tree();
     root->right->right = binary_tree_node(root->right, 79);
+    root->right->left = binary_tree_node(root->right, 70);
+    root->right->left->left = binary_tree_node(root->right, 68);
     binary_tree_print(root);
     heap = binary_tree_is_heap(root);
     printf("Is %d heap: %d\n", root->n, heap);

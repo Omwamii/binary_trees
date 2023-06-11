@@ -28,10 +28,26 @@ int is_max_heap(binary_tree_t *root)
 {
 	if (!root)
 		return (1);
-	if (!root->left && root->right) /* not a complete tree */
-		return (0);
+	if (root->right) /* not a complete tree */
+	{
+		if (root->left == NULL)
+			return (0);
+	}
 	if ((root->left && root->left->n > root->n)
 			|| (root->right && root->right->n > root->n))
 		return (0);
 	return (is_max_heap(root->left) && is_max_heap(root->right));
 }
+
+/**
+ * is_complete - check if a binary tree is complete
+ *
+int is_complete(binary_tree_t *root, size_t index, size_t size)
+{
+	if (!tree)
+		return (1);
+	if (idex >= size)
+		return (0);
+	return (is_complete(root->left, (2 * index) + 1, size) &&
+			is_complete(root->right, (2 * index) + 2, size))
+}*/
