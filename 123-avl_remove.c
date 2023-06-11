@@ -112,7 +112,7 @@ bst_t *min_val_node(bst_t *root)
 }
 
 /**
- * search - search for node in tree
+ * search - search for node of certain value in tree
  * @node: root node
  * @value: value of node to find
  *
